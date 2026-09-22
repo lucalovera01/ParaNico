@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Rutina y Sistema de Caritas</title>
+  <style>
+    :root {
+      --primary: #4A90E2;
+      --secondary: #50E3C2;
+      --accent: #F5A623;
+      --bg: #F4F7F6;
+      --text: #333333;
+      --card-bg: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary), #357ABD);
+      color: white;
+      padding: 25px 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      color: #2C3E50;
+      margin: 15px 0 10px 0;
+      font-size: 1.1rem;
+    }
+
+    /* Tablas de Rutina */
+    .routine-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .routine-table th, .routine-table td {
+      border: 1px solid #E0E0E0;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .routine-table th {
+      background-color: #EBF3FA;
+      color: #2C3E50;
+    }
+
+    .check-col {
+      width: 120px;
+      text-align: center !important;
+    }
+
+    .icon-col {
+      width: 50px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    /* Retos */
+    .grid-challenges {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .challenge-card {
+      border: 1px solid #E0E0E0;
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      padding: 12px;
+      background: #FFFDF9;
+    }
+
+    .challenge-card h4 {
+      color: #D35400;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .challenge-card ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      font-size: 0.95rem;
+    }
+
+    /* Recompensas */
+    .rewards-box {
+      background: #F0FDF4;
+      border: 2px dashed #2ECC71;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .reward-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #E2F0D9;
+    }
+
+    .reward-item:last-child {
+      border-bottom: none;
+    }
+
+    .badge {
+      background: #2ECC71;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .note-box {
+      background: #FFF3CD;
+      border-left: 4px solid #FFC107;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-top: 15px;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .container {
+        max-width: 100%;
+      }
+      section {
+        box-shadow: none;
+        border: 1px solid #DDD;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>📅 Tablero de Rutina y Autonomía</h1>
+    <p>Guía de apoyo visual e incentivos diarios</p>
+  </header>
+
+  <!-- SECCIÓN 1: RUTINAS -->
+  <section id="rutinas">
+    <h2>1. Rutina Diaria</h2>
+
+    <!-- POR LA MAÑANA -->
+    <h3>🌅 Por la Mañana</h3>
+    <table class="routine-table">
+      <thead>
+        <tr>
+          <th class="icon-col">Icono</th>
+          <th>Acción / Paso</th>
+          <th class="check-col">¿Lo logré?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="icon-col">⏰</td>
+          <td>Despertarme y levantarme de la cama</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">👕</td>
+          <td>Cambiarme de ropa (poner ropa de casa)</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🛏️</td>
+          <td>Hacer la cama</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🥣</td>
+          <td>Tomar el desayuno</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🎮</td>
+          <td>Tiempo libre (Ver tele / Jugar PlayStation)</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr style="background-color: #FFF3CD;">
+          <td class="icon-col">🔔</td>
+          <td><strong>SUENA LA ALARMA</strong> (Transición para salir)</td>
+          <td class="check-col">-</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🪥</td>
+          <td>Lavarse los dientes</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🏫</td>
+          <td>Vestirse con el uniforme / ropa para la escuela</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🍲</td>
+          <td>Comer el almuerzo</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🧸</td>
+          <td>Guardar los juguetes utilizados</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🚪</td>
+          <td>Mochila lista y salir con mamá</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- POR LA TARDE -->
+    <h3>☀️ Por la Tarde (Post-Escuela)</h3>
+    <table class="routine-table">
+      <thead>
+        <tr>
+          <th class="icon-col">Icono</th>
+          <th>Acción / Paso</th>
+          <th class="check-col">¿Lo logré?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="icon-col">🧼</td>
+          <td>Llegar, quitarse el calzado y lavarse las manos</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🍎</td>
+          <td>Merendar / Colación</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">✏️</td>
+          <td>Realizar tareas del colegio / Repaso</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🚲</td>
+          <td>Juego libre / Deporte / Salida</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- POR LA NOCHE -->
+    <h3>🌙 Por la Noche</h3>
+    <table class="routine-table">
+      <thead>
+        <tr>
+          <th class="icon-col">Icono</th>
+          <th>Acción / Paso</th>
+          <th class="check-col">¿Lo logré?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="icon-col">🛁</td>
+          <td>Bañarse o ducharse</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🍽️</td>
+          <td>Cenar en familia</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">🪥</td>
+          <td>Lavarse los dientes</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">📖</td>
+          <td>Actividad tranquila (Lectura / Música suave)</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+        <tr>
+          <td class="icon-col">😴</td>
+          <td>Ir a la cama a dormir</td>
+          <td class="check-col">😊 / 🌟</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECCIÓN 2: RETOS -->
+  <section id="retos">
+    <h2>2. Banco de Retos de Autonomía</h2>
+    <p style="margin-bottom: 15px;">Selecciona 1 reto para trabajar durante varios días seguidos.</p>
+
+    <div class="grid-challenges">
+      
+      <div class="challenge-card">
+        <h4>🧼 Cuidado Personal</h4>
+        <ul>
+          <li>Peinarse solo frente al espejo.</li>
+          <li>Atarse los cordones de las zapatillas.</li>
+          <li>Ponerse desodorante o crema solo.</li>
+          <li>Cortarse/limarse las uñas con guía.</li>
+        </ul>
+      </div>
+
+      <div class="challenge-card">
+        <h4>🍳 Cocina y Alimentación</h4>
+        <ul>
+          <li>Servir jugo o agua desde la jarra.</li>
+          <li>Untar tostadas con manteca o dulce.</li>
+          <li>Pelar una fruta (banana / mandarina).</li>
+          <li>Preparar su propio cereal con leche.</li>
+        </ul>
+      </div>
+
+      <div class="challenge-card">
+        <h4>🏠 Hogar y Colaboración</h4>
+        <ul>
+          <li>Llevar su plato y vaso a la pileta.</li>
+          <li>Clasificar y guardar su ropa limpia.</li>
+          <li>Doblar sus remeras.</li>
+          <li>Regar una planta de la casa.</li>
+        </ul>
+      </div>
+
+      <div class="challenge-card">
+        <h4>🎒 Escuela y Organización</h4>
+        <ul>
+          <li>Revisar el cuaderno de notas.</li>
+          <li>Sacar punta a sus lápices.</li>
+          <li>Guardar la cantimplora en la mochila.</li>
+          <li>Acomodar la ropa la noche anterior.</li>
+        </ul>
+      </div>
+
+      <div class="challenge-card">
+        <h4>🧘 Emociones y Social</h4>
+        <ul>
+          <li>Señalar en la tabla cómo se siente.</li>
+          <li>Pedir ayuda con palabras si se frustra.</li>
+          <li>Saludar/despedirse al entrar/salir.</li>
+          <li>Esperar 2 minutos sin interrumpir.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: RECOMPENSAS -->
+  <section id="recompensas">
+    <h2>3. Sistema de Recompensas (Economía de Fichas)</h2>
+    
+    <div class="rewards-box">
+      <div class="reward-item">
+        <span>🎮 Tiempo extra de PlayStation / Tablet (20 min)</span>
+        <span class="badge">3 Caritas</span>
+      </div>
+      <div class="reward-item">
+        <span>📺 Elegir qué mirar en la tele / Elegir la merienda</span>
+        <span class="badge">5 Caritas</span>
+      </div>
+      <div class="reward-item">
+        <span>🎵 Escuchar su canción o video favorito inmediatamente</span>
+        <span class="badge">1 Carita Especial</span>
+      </div>
+      <div class="reward-item">
+        <span>🌳 Paseo especial (Plaza, parque o lugar preferido)</span>
+        <span class="badge">Meta Semanal (10+ Caritas)</span>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong> Reglas clave del sistema:</strong>
+      <ul>
+        <li>Dibuja o marca la carita de forma <strong>inmediata</strong> al finalizar cada tarea.</li>
+        <li><strong>NUNCA quites caritas ya ganadas</strong> aunque ocurra un berrinche o desregulación posterior.</li>
+        <li>Si no se cumple una tarea, ese casillero queda sin marca, pero el niño conserva las caritas anteriores.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
