@@ -15,6 +15,7 @@
       --card-bg: #FFFFFF;
       --btn-idle: #BDC3C7;
       --gold: #F1C40F;
+      --purple: #9B59B6;
     }
 
     * {
@@ -34,17 +35,17 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
-      padding-bottom: 80px;
+      padding-bottom: 40px;
     }
 
-    /* Fixed Top Counter Bar */
-    .score-bar {
+    /* Fixed Top Counter & Navigation Bar */
+    .top-bar {
       position: sticky;
       top: 10px;
       z-index: 100;
       background: linear-gradient(135deg, #2C3E50, #3498DB);
       color: white;
-      padding: 12px 25px;
+      padding: 10px 20px;
       border-radius: 50px;
       display: flex;
       justify-content: space-between;
@@ -53,20 +54,42 @@
       margin-bottom: 20px;
     }
 
-    .score-title {
-      font-size: 1.1rem;
-      font-weight: bold;
+    .nav-left {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
+    .btn-home {
+      background: white;
+      color: #2C3E50;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .btn-home:hover {
+      background: #E0E0E0;
+    }
+
+    .score-title {
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .score-badge {
       background: var(--gold);
       color: #000;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: bold;
-      padding: 3px 16px;
+      padding: 2px 12px;
       border-radius: 30px;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
     }
@@ -75,28 +98,91 @@
       background: #E74C3C;
       color: white;
       border: none;
-      padding: 8px 15px;
+      padding: 6px 12px;
       border-radius: 20px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.85rem;
-      transition: background 0.2s;
+      font-size: 0.8rem;
     }
 
-    .btn-reset:hover {
-      background: #C0392B;
+    /* Pages Container */
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
     }
 
-    header {
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MENU PAGE STYLING */
+    .menu-header {
       text-align: center;
       background: linear-gradient(135deg, var(--primary), #357ABD);
       color: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 30px 20px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
+    .menu-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 3px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .menu-card.c-rutinas { border-color: var(--primary); }
+    .menu-card.c-retos { border-color: var(--accent); }
+    .menu-card.c-recompensas { border-color: var(--gold); }
+
+    .menu-icon {
+      font-size: 3.5rem;
+    }
+
+    .menu-card h2 {
+      font-size: 1.5rem;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu-card p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    /* GENERAL PAGE ELEMENTS */
     section {
       background: var(--card-bg);
       border-radius: 12px;
@@ -331,253 +417,291 @@
 
 <div class="container">
 
-  <!-- Fixed Top Score Tracker for Major Rewards -->
-  <div class="score-bar">
-    <div class="score-title">
-      <span>⭐ Caritas / Estrellas acumuladas:</span>
-      <span id="score" class="score-badge">0</span>
+  <!-- Fixed Top Score & Navigation Tracker Bar -->
+  <div class="top-bar">
+    <div class="nav-left">
+      <button class="btn-home" onclick="showPage('menu-page')">🏠 Menú Principal</button>
+      <div class="score-title">
+        <span>⭐ Caritas:</span>
+        <span id="score" class="score-badge">0</span>
+      </div>
     </div>
     <button class="btn-reset" onclick="resetDay()">🔄 Reiniciar Día</button>
   </div>
 
-  <header>
-    <h1>📅 Tablero de Rutina y Retos</h1>
-    <p>Completa los pasos en orden para ganar tu Tiempo Libre y acumula Caritas con los Retos para Gran Premios</p>
-  </header>
-
-  <!-- SECCIÓN 1: RUTINA SECUENCIAL E INMEDIATA -->
-  <section id="rutinas">
-    <h2>1. Rutinas Diarias con Premio Inmediato</h2>
-
-    <!-- BLOQUE 1: MAÑANA TEMPRANO -->
-    <h3>🌅 Bloque 1: Al Despertar</h3>
-    <table class="routine-table">
-      <thead>
-        <tr>
-          <th class="icon-col">Icono</th>
-          <th>Acción / Paso</th>
-          <th class="action-col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="icon-col">⏰</td>
-          <td>Despertarme y levantarme de la cama</td>
-          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">👕</td>
-          <td>Cambiarme de ropa (poner ropa de casa)</td>
-          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🛏️</td>
-          <td>Hacer la cama</td>
-          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🥣</td>
-          <td>Tomar el desayuno</td>
-          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="immediate-reward-box" id="reward-b1">
-      <div>
-        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🎮 Tiempo libre de TV o Play / Juego preferido
-      </div>
-      <span class="reward-status">Bloque Incompleto</span>
+  <!-- PAGINA 1: MENU PRINCIPAL -->
+  <div id="menu-page" class="page active">
+    <div class="menu-header">
+      <h1>📅 Tablero de Rutina y Retos</h1>
+      <p>Selecciona una sección para comenzar</p>
     </div>
 
-    <!-- BLOQUE 2: SALIDA A LA ESCUELA -->
-    <h3>🏫 Bloque 2: Preparación para la Escuela</h3>
-    <table class="routine-table">
-      <thead>
-        <tr>
-          <th class="icon-col">Icono</th>
-          <th>Acción / Paso</th>
-          <th class="action-col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="background-color: #FFF3CD;">
-          <td class="icon-col">🔔</td>
-          <td><strong>SUENA LA ALARMA</strong> (Transición: apagar tele/juego)</td>
-          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🪥</td>
-          <td>Lavarse los dientes</td>
-          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🎒</td>
-          <td>Vestirse con la ropa del colegio y mochila lista</td>
-          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🍲</td>
-          <td>Comer el almuerzo</td>
-          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🧸</td>
-          <td>Guardar los juguetes utilizados</td>
-          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="immediate-reward-box" id="reward-b2">
-      <div>
-        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🚪 ¡Listo para salir feliz con mamá! / Canción favorita en el camino
+    <div class="menu-grid">
+      <div class="menu-card c-rutinas" onclick="showPage('rutinas-page')">
+        <div class="menu-icon">🌅</div>
+        <h2 style="color: var(--primary);">Rutinas</h2>
+        <p>Completa los pasos en orden para ganar tu Tiempo Libre inmediato.</p>
       </div>
-      <span class="reward-status">Bloque Incompleto</span>
-    </div>
 
-    <!-- BLOQUE 3: TARDE Y NOCHE -->
-    <h3>🌙 Bloque 3: Tarde y Noche</h3>
-    <table class="routine-table">
-      <thead>
-        <tr>
-          <th class="icon-col">Icono</th>
-          <th>Acción / Paso</th>
-          <th class="action-col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="icon-col">🧼</td>
-          <td>Llegar, quitarse el calzado y lavarse las manos</td>
-          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">✏️</td>
-          <td>Merendar y hacer la tarea del colegio</td>
-          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🛁</td>
-          <td>Bañarse o ducharse</td>
-          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
-        </tr>
-        <tr>
-          <td class="icon-col">🍽️</td>
-          <td>Cenar y lavarse los dientes</td>
-          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="immediate-reward-box" id="reward-b3">
-      <div>
-        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 📖 Cuento a elección / Tiempo de juego tranquilo antes de dormir
+      <div class="menu-card c-retos" onclick="showPage('retos-page')">
+        <div class="menu-icon">⭐</div>
+        <h2 style="color: #D35400;">Retos del Día</h2>
+        <p>Práctica nuevas habilidades de autonomía y suma Caritas.</p>
       </div>
-      <span class="reward-status">Bloque Incompleto</span>
-    </div>
 
-  </section>
-
-  <!-- SECCIÓN 2: RETOS ACUMULATIVOS -->
-  <section id="retos">
-    <h2>2. Reto del Día (Suma Caritas)</h2>
-    <p style="margin-bottom: 15px;">Realizar los retos permite juntar <strong>Caritas / Estrellas ⭐</strong> acumulables para desbloquear Recompensas Mayores.</p>
-
-    <div class="active-challenge-box">
-      <h3>⭐ Reto Especial de Hoy</h3>
-      <p style="margin-bottom: 10px;">Escriban el reto a trabajar hoy (ej: Servir jugo solo, peinarse solo):</p>
-      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <input type="text" id="challenge-input" placeholder="Escribe aquí el reto..." style="flex: 1; padding: 10px; border: 1px solid #CCC; border-radius: 6px; min-width: 200px;">
-        <button class="btn-complete btn-challenge" onclick="addChallengePoint(this)">¿Hecho?</button>
+      <div class="menu-card c-recompensas" onclick="showPage('recompensas-page')">
+        <div class="menu-icon">🎁</div>
+        <h2 style="color: #B7950B;">Recompensas</h2>
+        <p>Mira los Premios Mayores que puedes desbloquear con tus Caritas.</p>
       </div>
     </div>
+  </div>
 
-    <h3>📚 Banco de Retos Sugeridos</h3>
-    <div class="grid-challenges">
-      <div class="challenge-card">
-        <h4>🧼 Cuidado Personal</h4>
-        <ul>
-          <li>Peinarse solo frente al espejo.</li>
-          <li>Atarse los cordones de las zapatillas.</li>
-          <li>Ponerse desodorante o crema solo.</li>
-        </ul>
-      </div>
+  <!-- PAGINA 2: RUTINA SECUENCIAL E INMEDIATA -->
+  <div id="rutinas-page" class="page">
+    <section>
+      <h2>1. Rutinas Diarias con Premio Inmediato</h2>
 
-      <div class="challenge-card">
-        <h4>🍳 Cocina y Alimentación</h4>
-        <ul>
-          <li>Servir jugo o agua desde la jarra.</li>
-          <li>Untar tostadas con manteca o dulce.</li>
-          <li>Pelar una fruta (banana / mandarina).</li>
-        </ul>
-      </div>
+      <!-- BLOQUE 1: MAÑANA TEMPRANO -->
+      <h3>🌅 Bloque 1: Al Despertar</h3>
+      <table class="routine-table">
+        <thead>
+          <tr>
+            <th class="icon-col">Icono</th>
+            <th>Acción / Paso</th>
+            <th class="action-col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="icon-col">⏰</td>
+            <td>Despertarme y levantarme de la cama</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">👕</td>
+            <td>Cambiarme de ropa (poner ropa de casa)</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🛏️</td>
+            <td>Hacer la cama</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🥣</td>
+            <td>Tomar el desayuno</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class="challenge-card">
-        <h4>🏠 Hogar y Colaboración</h4>
-        <ul>
-          <li>Llevar su plato y vaso a la pileta.</li>
-          <li>Clasificar y guardar su ropa limpia.</li>
-          <li>Doblar sus remeras.</li>
-        </ul>
-      </div>
-
-      <div class="challenge-card">
-        <h4>🎒 Escuela y Organización</h4>
-        <ul>
-          <li>Revisar el cuaderno de notas.</li>
-          <li>Sacar punta a sus lápices.</li>
-          <li>Acomodar la ropa la noche anterior.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN 3: RECOMPENSAS MAYORES (ACUMULATIVAS) -->
-  <section id="recompensas">
-    <h2>3. Recompensas Mayores Acumulativas</h2>
-    <p style="margin-bottom: 15px;">Se desbloquean acumulando caritas ganadas a través de los Retos del Día:</p>
-    
-    <div class="rewards-box">
-      <div class="reward-item locked" id="reward-major-3">
+      <div class="immediate-reward-box" id="reward-b1">
         <div>
-          <strong>🍦 Elegir el postre o comida preferida del fin de semana</strong>
-          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🎮 Tiempo libre de TV o Play / Juego preferido
         </div>
-        <span class="badge">3 Caritas</span>
+        <span class="reward-status">Bloque Incompleto</span>
       </div>
 
-      <div class="reward-item locked" id="reward-major-5">
+      <!-- BLOQUE 2: SALIDA A LA ESCUELA -->
+      <h3>🏫 Bloque 2: Preparación para la Escuela</h3>
+      <table class="routine-table">
+        <thead>
+          <tr>
+            <th class="icon-col">Icono</th>
+            <th>Acción / Paso</th>
+            <th class="action-col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background-color: #FFF3CD;">
+            <td class="icon-col">🔔</td>
+            <td><strong>SUENA LA ALARMA</strong> (Transición: apagar tele/juego)</td>
+            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🪥</td>
+            <td>Lavarse los dientes</td>
+            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🎒</td>
+            <td>Vestirse con la ropa del colegio y mochila lista</td>
+            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🍲</td>
+            <td>Comer el almuerzo</td>
+            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🧸</td>
+            <td>Guardar los juguetes utilizados</td>
+            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="immediate-reward-box" id="reward-b2">
         <div>
-          <strong>🎬 Noche de película especial con pochoclos</strong>
-          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🚪 ¡Listo para salir feliz con mamá! / Canción favorita en el camino
         </div>
-        <span class="badge">5 Caritas</span>
+        <span class="reward-status">Bloque Incompleto</span>
       </div>
 
-      <div class="reward-item locked" id="reward-major-10">
+      <!-- BLOQUE 3: TARDE Y NOCHE -->
+      <h3>🌙 Bloque 3: Tarde y Noche</h3>
+      <table class="routine-table">
+        <thead>
+          <tr>
+            <th class="icon-col">Icono</th>
+            <th>Acción / Paso</th>
+            <th class="action-col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="icon-col">🧼</td>
+            <td>Llegar, quitarse el calzado y lavarse las manos</td>
+            <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">✏️</td>
+            <td>Merendar y hacer la tarea del colegio</td>
+            <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🛁</td>
+            <td>Bañarse o ducharse</td>
+            <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🍽️</td>
+            <td>Cenar y lavarse los dientes</td>
+            <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="immediate-reward-box" id="reward-b3">
         <div>
-          <strong>🌳 Salida / Paseo especial (Plaza, parque, juego preferido)</strong>
-          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 📖 Cuento a elección / Tiempo de juego tranquilo antes de dormir
         </div>
-        <span class="badge">10 Caritas</span>
+        <span class="reward-status">Bloque Incompleto</span>
       </div>
-    </div>
+    </section>
+  </div>
 
-    <div class="note-box">
-      <strong> Reglas clave del sistema:</strong>
-      <ul>
-        <li>Las tareas diarias otorgan su <strong>recompensa de bloque de forma inmediata</strong> al completarse todas.</li>
-        <li>Los Retos otorgan <strong>Caritas acumulables</strong> que no se pierden al reiniciar el día.</li>
-        <li><strong>NUNCA se quitan las caritas o recompensas ganadas.</strong></li>
-      </ul>
-    </div>
-  </section>
+  <!-- PAGINA 3: RETOS ACUMULATIVOS -->
+  <div id="retos-page" class="page">
+    <section>
+      <h2>2. Reto del Día (Suma Caritas)</h2>
+      <p style="margin-bottom: 15px;">Realizar los retos permite juntar <strong>Caritas / Estrellas ⭐</strong> acumulables para desbloquear Recompensas Mayores.</p>
+
+      <div class="active-challenge-box">
+        <h3>⭐ Reto Especial de Hoy</h3>
+        <p style="margin-bottom: 10px;">Escriban el reto a trabajar hoy (ej: Servir jugo solo, peinarse solo):</p>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <input type="text" id="challenge-input" placeholder="Escribe aquí el reto..." style="flex: 1; padding: 10px; border: 1px solid #CCC; border-radius: 6px; min-width: 200px;">
+          <button class="btn-complete btn-challenge" onclick="addChallengePoint(this)">¿Hecho?</button>
+        </div>
+      </div>
+
+      <h3>📚 Banco de Retos Sugeridos</h3>
+      <div class="grid-challenges">
+        <div class="challenge-card">
+          <h4>🧼 Cuidado Personal</h4>
+          <ul>
+            <li>Peinarse solo frente al espejo.</li>
+            <li>Atarse los cordones de las zapatillas.</li>
+            <li>Ponerse desodorante o crema solo.</li>
+          </ul>
+        </div>
+
+        <div class="challenge-card">
+          <h4>🍳 Cocina y Alimentación</h4>
+          <ul>
+            <li>Servir jugo o agua desde la jarra.</li>
+            <li>Untar tostadas con manteca o dulce.</li>
+            <li>Pelar una fruta (banana / mandarina).</li>
+          </ul>
+        </div>
+
+        <div class="challenge-card">
+          <h4>🏠 Hogar y Colaboración</h4>
+          <ul>
+            <li>Llevar su plato y vaso a la pileta.</li>
+            <li>Clasificar y guardar su ropa limpia.</li>
+            <li>Doblar sus remeras.</li>
+          </ul>
+        </div>
+
+        <div class="challenge-card">
+          <h4>🎒 Escuela y Organización</h4>
+          <ul>
+            <li>Revisar el cuaderno de notas.</li>
+            <li>Sacar punta a sus lápices.</li>
+            <li>Acomodar la ropa la noche anterior.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGINA 4: RECOMPENSAS MAYORES (ACUMULATIVAS) -->
+  <div id="recompensas-page" class="page">
+    <section>
+      <h2>3. Recompensas Mayores Acumulativas</h2>
+      <p style="margin-bottom: 15px;">Se desbloquean acumulando caritas ganadas a través de los Retos del Día:</p>
+      
+      <div class="rewards-box">
+        <div class="reward-item locked" id="reward-major-3">
+          <div>
+            <strong>🍦 Elegir el postre o comida preferida del fin de semana</strong>
+            <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          </div>
+          <span class="badge">3 Caritas</span>
+        </div>
+
+        <div class="reward-item locked" id="reward-major-5">
+          <div>
+            <strong>🎬 Noche de película especial con pochoclos</strong>
+            <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          </div>
+          <span class="badge">5 Caritas</span>
+        </div>
+
+        <div class="reward-item locked" id="reward-major-10">
+          <div>
+            <strong>🌳 Salida / Paseo especial (Plaza, parque, juego preferido)</strong>
+            <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+          </div>
+          <span class="badge">10 Caritas</span>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <strong> Reglas clave del sistema:</strong>
+        <ul>
+          <li>Las tareas diarias otorgan su <strong>recompensa de bloque de forma inmediata</strong> al completarse todas.</li>
+          <li>Los Retos otorgan <strong>Caritas acumulables</strong> que no se pierden al reiniciar el día.</li>
+          <li><strong>NUNCA se quitan las caritas o recompensas ganadas.</strong></li>
+        </ul>
+      </div>
+    </section>
+  </div>
 
 </div>
 
 <script>
   let score = 0;
+
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   function checkStep(button, blockClass, rewardBoxId) {
     if (button.classList.contains('done')) return;
