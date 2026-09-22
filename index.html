@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Rutina y Sistema de Caritas</title>
+  <title>Tablero Interactivo de Rutina y Recompensas</title>
   <style>
     :root {
       --primary: #4A90E2;
       --secondary: #50E3C2;
       --accent: #F5A623;
+      --success: #2ECC71;
       --bg: #F4F7F6;
       --text: #333333;
       --card-bg: #FFFFFF;
+      --btn-idle: #BDC3C7;
+      --gold: #F1C40F;
     }
 
     * {
@@ -31,26 +34,67 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    /* Fixed Top Counter Bar */
+    .score-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: linear-gradient(135deg, #2C3E50, #3498DB);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    .score-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .score-badge {
+      background: var(--gold);
+      color: #000;
+      font-size: 1.4rem;
+      font-weight: bold;
+      padding: 3px 16px;
+      border-radius: 30px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-reset {
+      background: #E74C3C;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: #C0392B;
     }
 
     header {
       text-align: center;
       background: linear-gradient(135deg, var(--primary), #357ABD);
       color: white;
-      padding: 25px 20px;
+      padding: 20px;
       border-radius: 12px;
       margin-bottom: 25px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    header p {
-      font-size: 1rem;
-      opacity: 0.9;
     }
 
     section {
@@ -73,13 +117,16 @@
       color: #2C3E50;
       margin: 15px 0 10px 0;
       font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Tablas de Rutina */
+    /* Routine Table Styling */
     .routine-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .routine-table th, .routine-table td {
@@ -93,21 +140,107 @@
       color: #2C3E50;
     }
 
-    .check-col {
-      width: 120px;
-      text-align: center !important;
-    }
-
     .icon-col {
       width: 50px;
       text-align: center;
       font-size: 1.3rem;
     }
 
-    /* Retos */
+    .action-col {
+      width: 150px;
+      text-align: center;
+    }
+
+    /* Immediate Reward Block Card */
+    .immediate-reward-box {
+      background: #E8F8F5;
+      border: 2px solid var(--secondary);
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .immediate-reward-box.unlocked {
+      background: #D4EFDF;
+      border-color: var(--success);
+      box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+    }
+
+    .reward-status {
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      background: #BDC3C7;
+      color: white;
+    }
+
+    .immediate-reward-box.unlocked .reward-status {
+      background: var(--success);
+    }
+
+    /* Action Buttons */
+    .btn-complete {
+      background-color: var(--btn-idle);
+      color: #2C3E50;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-width: 110px;
+    }
+
+    .btn-complete:hover {
+      background-color: #95A5A6;
+      transform: scale(1.05);
+    }
+
+    .btn-complete.done {
+      background-color: var(--success);
+      color: white;
+      cursor: default;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .btn-challenge {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-challenge:hover {
+      background-color: #E67E22;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* Active Challenge Card */
+    .active-challenge-box {
+      background: #FFFDF9;
+      border: 2px dashed var(--accent);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    /* Challenge Bank Grid */
     .grid-challenges {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 15px;
     }
 
@@ -116,27 +249,24 @@
       border-left: 5px solid var(--accent);
       border-radius: 8px;
       padding: 12px;
-      background: #FFFDF9;
+      background: #FFFFFF;
     }
 
     .challenge-card h4 {
       color: #D35400;
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .challenge-card ul {
       list-style-type: disc;
       padding-left: 20px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
-    /* Recompensas */
+    /* Major Rewards Section */
     .rewards-box {
-      background: #F0FDF4;
-      border: 2px dashed #2ECC71;
+      background: #FEF9E7;
+      border: 2px solid var(--gold);
       border-radius: 10px;
       padding: 15px;
     }
@@ -145,21 +275,46 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #E2F0D9;
+      padding: 12px;
+      border-bottom: 1px solid #F9E79F;
+      background: white;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      transition: all 0.3s;
     }
 
-    .reward-item:last-child {
-      border-bottom: none;
+    .reward-item.locked {
+      opacity: 0.6;
+      filter: grayscale(0.5);
+    }
+
+    .reward-item.unlocked {
+      border: 2px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(241, 196, 15, 0.3);
     }
 
     .badge {
-      background: #2ECC71;
+      background: #95A5A6;
       color: white;
-      padding: 4px 10px;
+      padding: 6px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: bold;
+    }
+
+    .reward-item.unlocked .badge {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .unlock-msg {
+      font-weight: bold;
+      color: #D4AC0D;
+      display: none;
+    }
+
+    .reward-item.unlocked .unlock-msg {
+      display: inline;
     }
 
     .note-box {
@@ -170,193 +325,182 @@
       font-size: 0.9rem;
       margin-top: 15px;
     }
-
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-      .container {
-        max-width: 100%;
-      }
-      section {
-        box-shadow: none;
-        border: 1px solid #DDD;
-        page-break-inside: avoid;
-      }
-    }
   </style>
 </head>
 <body>
 
 <div class="container">
 
+  <!-- Fixed Top Score Tracker for Major Rewards -->
+  <div class="score-bar">
+    <div class="score-title">
+      <span>⭐ Caritas / Estrellas acumuladas:</span>
+      <span id="score" class="score-badge">0</span>
+    </div>
+    <button class="btn-reset" onclick="resetDay()">🔄 Reiniciar Día</button>
+  </div>
+
   <header>
-    <h1>📅 Tablero de Rutina y Autonomía</h1>
-    <p>Guía de apoyo visual e incentivos diarios</p>
+    <h1>📅 Tablero de Rutina y Retos</h1>
+    <p>Completa los pasos en orden para ganar tu Tiempo Libre y acumula Caritas con los Retos para Gran Premios</p>
   </header>
 
-  <!-- SECCIÓN 1: RUTINAS -->
+  <!-- SECCIÓN 1: RUTINA SECUENCIAL E INMEDIATA -->
   <section id="rutinas">
-    <h2>1. Rutina Diaria</h2>
+    <h2>1. Rutinas Diarias con Premio Inmediato</h2>
 
-    <!-- POR LA MAÑANA -->
-    <h3>🌅 Por la Mañana</h3>
+    <!-- BLOQUE 1: MAÑANA TEMPRANO -->
+    <h3>🌅 Bloque 1: Al Despertar</h3>
     <table class="routine-table">
       <thead>
         <tr>
           <th class="icon-col">Icono</th>
           <th>Acción / Paso</th>
-          <th class="check-col">¿Lo logré?</th>
+          <th class="action-col">Estado</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="icon-col">⏰</td>
           <td>Despertarme y levantarme de la cama</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
         </tr>
         <tr>
           <td class="icon-col">👕</td>
           <td>Cambiarme de ropa (poner ropa de casa)</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
         </tr>
         <tr>
           <td class="icon-col">🛏️</td>
           <td>Hacer la cama</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
         </tr>
         <tr>
           <td class="icon-col">🥣</td>
           <td>Tomar el desayuno</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🎮</td>
-          <td>Tiempo libre (Ver tele / Jugar PlayStation)</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr style="background-color: #FFF3CD;">
-          <td class="icon-col">🔔</td>
-          <td><strong>SUENA LA ALARMA</strong> (Transición para salir)</td>
-          <td class="check-col">-</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🪥</td>
-          <td>Lavarse los dientes</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🏫</td>
-          <td>Vestirse con el uniforme / ropa para la escuela</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🍲</td>
-          <td>Comer el almuerzo</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🧸</td>
-          <td>Guardar los juguetes utilizados</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🚪</td>
-          <td>Mochila lista y salir con mamá</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
         </tr>
       </tbody>
     </table>
 
-    <!-- POR LA TARDE -->
-    <h3>☀️ Por la Tarde (Post-Escuela)</h3>
+    <div class="immediate-reward-box" id="reward-b1">
+      <div>
+        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🎮 Tiempo libre de TV o Play / Juego preferido
+      </div>
+      <span class="reward-status">Bloque Incompleto</span>
+    </div>
+
+    <!-- BLOQUE 2: SALIDA A LA ESCUELA -->
+    <h3>🏫 Bloque 2: Preparación para la Escuela</h3>
     <table class="routine-table">
       <thead>
         <tr>
           <th class="icon-col">Icono</th>
           <th>Acción / Paso</th>
-          <th class="check-col">¿Lo logré?</th>
+          <th class="action-col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #FFF3CD;">
+          <td class="icon-col">🔔</td>
+          <td><strong>SUENA LA ALARMA</strong> (Transición: apagar tele/juego)</td>
+          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+        </tr>
+        <tr>
+          <td class="icon-col">🪥</td>
+          <td>Lavarse los dientes</td>
+          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+        </tr>
+        <tr>
+          <td class="icon-col">🎒</td>
+          <td>Vestirse con la ropa del colegio y mochila lista</td>
+          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+        </tr>
+        <tr>
+          <td class="icon-col">🍲</td>
+          <td>Comer el almuerzo</td>
+          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+        </tr>
+        <tr>
+          <td class="icon-col">🧸</td>
+          <td>Guardar los juguetes utilizados</td>
+          <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="immediate-reward-box" id="reward-b2">
+      <div>
+        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🚪 ¡Listo para salir feliz con mamá! / Canción favorita en el camino
+      </div>
+      <span class="reward-status">Bloque Incompleto</span>
+    </div>
+
+    <!-- BLOQUE 3: TARDE Y NOCHE -->
+    <h3>🌙 Bloque 3: Tarde y Noche</h3>
+    <table class="routine-table">
+      <thead>
+        <tr>
+          <th class="icon-col">Icono</th>
+          <th>Acción / Paso</th>
+          <th class="action-col">Estado</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="icon-col">🧼</td>
           <td>Llegar, quitarse el calzado y lavarse las manos</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🍎</td>
-          <td>Merendar / Colación</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
         </tr>
         <tr>
           <td class="icon-col">✏️</td>
-          <td>Realizar tareas del colegio / Repaso</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td>Merendar y hacer la tarea del colegio</td>
+          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
         </tr>
-        <tr>
-          <td class="icon-col">🚲</td>
-          <td>Juego libre / Deporte / Salida</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- POR LA NOCHE -->
-    <h3>🌙 Por la Noche</h3>
-    <table class="routine-table">
-      <thead>
-        <tr>
-          <th class="icon-col">Icono</th>
-          <th>Acción / Paso</th>
-          <th class="check-col">¿Lo logré?</th>
-        </tr>
-      </thead>
-      <tbody>
         <tr>
           <td class="icon-col">🛁</td>
           <td>Bañarse o ducharse</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
         </tr>
         <tr>
           <td class="icon-col">🍽️</td>
-          <td>Cenar en familia</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">🪥</td>
-          <td>Lavarse los dientes</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">📖</td>
-          <td>Actividad tranquila (Lectura / Música suave)</td>
-          <td class="check-col">😊 / 🌟</td>
-        </tr>
-        <tr>
-          <td class="icon-col">😴</td>
-          <td>Ir a la cama a dormir</td>
-          <td class="check-col">😊 / 🌟</td>
+          <td>Cenar y lavarse los dientes</td>
+          <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
         </tr>
       </tbody>
     </table>
+
+    <div class="immediate-reward-box" id="reward-b3">
+      <div>
+        <strong>🎁 RECOMPENSA INMEDIATA:</strong> 📖 Cuento a elección / Tiempo de juego tranquilo antes de dormir
+      </div>
+      <span class="reward-status">Bloque Incompleto</span>
+    </div>
+
   </section>
 
-  <!-- SECCIÓN 2: RETOS -->
+  <!-- SECCIÓN 2: RETOS ACUMULATIVOS -->
   <section id="retos">
-    <h2>2. Banco de Retos de Autonomía</h2>
-    <p style="margin-bottom: 15px;">Selecciona 1 reto para trabajar durante varios días seguidos.</p>
+    <h2>2. Reto del Día (Suma Caritas)</h2>
+    <p style="margin-bottom: 15px;">Realizar los retos permite juntar <strong>Caritas / Estrellas ⭐</strong> acumulables para desbloquear Recompensas Mayores.</p>
 
+    <div class="active-challenge-box">
+      <h3>⭐ Reto Especial de Hoy</h3>
+      <p style="margin-bottom: 10px;">Escriban el reto a trabajar hoy (ej: Servir jugo solo, peinarse solo):</p>
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="challenge-input" placeholder="Escribe aquí el reto..." style="flex: 1; padding: 10px; border: 1px solid #CCC; border-radius: 6px; min-width: 200px;">
+        <button class="btn-complete btn-challenge" onclick="addChallengePoint(this)">¿Hecho?</button>
+      </div>
+    </div>
+
+    <h3>📚 Banco de Retos Sugeridos</h3>
     <div class="grid-challenges">
-      
       <div class="challenge-card">
         <h4>🧼 Cuidado Personal</h4>
         <ul>
           <li>Peinarse solo frente al espejo.</li>
           <li>Atarse los cordones de las zapatillas.</li>
           <li>Ponerse desodorante o crema solo.</li>
-          <li>Cortarse/limarse las uñas con guía.</li>
         </ul>
       </div>
 
@@ -366,7 +510,6 @@
           <li>Servir jugo o agua desde la jarra.</li>
           <li>Untar tostadas con manteca o dulce.</li>
           <li>Pelar una fruta (banana / mandarina).</li>
-          <li>Preparar su propio cereal con leche.</li>
         </ul>
       </div>
 
@@ -376,7 +519,6 @@
           <li>Llevar su plato y vaso a la pileta.</li>
           <li>Clasificar y guardar su ropa limpia.</li>
           <li>Doblar sus remeras.</li>
-          <li>Regar una planta de la casa.</li>
         </ul>
       </div>
 
@@ -385,58 +527,128 @@
         <ul>
           <li>Revisar el cuaderno de notas.</li>
           <li>Sacar punta a sus lápices.</li>
-          <li>Guardar la cantimplora en la mochila.</li>
           <li>Acomodar la ropa la noche anterior.</li>
         </ul>
       </div>
-
-      <div class="challenge-card">
-        <h4>🧘 Emociones y Social</h4>
-        <ul>
-          <li>Señalar en la tabla cómo se siente.</li>
-          <li>Pedir ayuda con palabras si se frustra.</li>
-          <li>Saludar/despedirse al entrar/salir.</li>
-          <li>Esperar 2 minutos sin interrumpir.</li>
-        </ul>
-      </div>
-
     </div>
   </section>
 
-  <!-- SECCIÓN 3: RECOMPENSAS -->
+  <!-- SECCIÓN 3: RECOMPENSAS MAYORES (ACUMULATIVAS) -->
   <section id="recompensas">
-    <h2>3. Sistema de Recompensas (Economía de Fichas)</h2>
+    <h2>3. Recompensas Mayores Acumulativas</h2>
+    <p style="margin-bottom: 15px;">Se desbloquean acumulando caritas ganadas a través de los Retos del Día:</p>
     
     <div class="rewards-box">
-      <div class="reward-item">
-        <span>🎮 Tiempo extra de PlayStation / Tablet (20 min)</span>
+      <div class="reward-item locked" id="reward-major-3">
+        <div>
+          <strong>🍦 Elegir el postre o comida preferida del fin de semana</strong>
+          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+        </div>
         <span class="badge">3 Caritas</span>
       </div>
-      <div class="reward-item">
-        <span>📺 Elegir qué mirar en la tele / Elegir la merienda</span>
+
+      <div class="reward-item locked" id="reward-major-5">
+        <div>
+          <strong>🎬 Noche de película especial con pochoclos</strong>
+          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+        </div>
         <span class="badge">5 Caritas</span>
       </div>
-      <div class="reward-item">
-        <span>🎵 Escuchar su canción o video favorito inmediatamente</span>
-        <span class="badge">1 Carita Especial</span>
-      </div>
-      <div class="reward-item">
-        <span>🌳 Paseo especial (Plaza, parque o lugar preferido)</span>
-        <span class="badge">Meta Semanal (10+ Caritas)</span>
+
+      <div class="reward-item locked" id="reward-major-10">
+        <div>
+          <strong>🌳 Salida / Paseo especial (Plaza, parque, juego preferido)</strong>
+          <span class="unlock-msg"> — ¡DESBLOQUEADO! 🎉</span>
+        </div>
+        <span class="badge">10 Caritas</span>
       </div>
     </div>
 
     <div class="note-box">
       <strong> Reglas clave del sistema:</strong>
       <ul>
-        <li>Dibuja o marca la carita de forma <strong>inmediata</strong> al finalizar cada tarea.</li>
-        <li><strong>NUNCA quites caritas ya ganadas</strong> aunque ocurra un berrinche o desregulación posterior.</li>
-        <li>Si no se cumple una tarea, ese casillero queda sin marca, pero el niño conserva las caritas anteriores.</li>
+        <li>Las tareas diarias otorgan su <strong>recompensa de bloque de forma inmediata</strong> al completarse todas.</li>
+        <li>Los Retos otorgan <strong>Caritas acumulables</strong> que no se pierden al reiniciar el día.</li>
+        <li><strong>NUNCA se quitan las caritas o recompensas ganadas.</strong></li>
       </ul>
     </div>
   </section>
 
 </div>
+
+<script>
+  let score = 0;
+
+  function checkStep(button, blockClass, rewardBoxId) {
+    if (button.classList.contains('done')) return;
+
+    button.classList.add('done');
+    button.innerText = "¡Logrado! ✔️";
+
+    // Check if all steps in this block are complete
+    const blockButtons = document.querySelectorAll('.' + blockClass);
+    const allDone = Array.from(blockButtons).every(btn => btn.classList.contains('done'));
+
+    if (allDone) {
+      const rewardBox = document.getElementById(rewardBoxId);
+      rewardBox.classList.add('unlocked');
+      rewardBox.querySelector('.reward-status').innerText = "¡DESBLOQUEADO! 🎉";
+    }
+  }
+
+  function addChallengePoint(button) {
+    if (button.classList.contains('done')) return;
+
+    score++;
+    document.getElementById('score').innerText = score;
+    
+    button.classList.add('done');
+    button.innerText = "+1 Carita ⭐";
+
+    updateMajorRewards();
+  }
+
+  function updateMajorRewards() {
+    checkMajorReward('reward-major-3', 3);
+    checkMajorReward('reward-major-5', 5);
+    checkMajorReward('reward-major-10', 10);
+  }
+
+  function checkMajorReward(id, requiredPoints) {
+    const el = document.getElementById(id);
+    if (score >= requiredPoints) {
+      el.classList.remove('locked');
+      el.classList.add('unlocked');
+    } else {
+      el.classList.remove('unlocked');
+      el.classList.add('locked');
+    }
+  }
+
+  function resetDay() {
+    if (confirm("¿Quieres reiniciar los botones de rutina diaria? (Las caritas del contador principal se conservarán para los premios acumulativos)")) {
+      const routineButtons = document.querySelectorAll('.btn-complete:not(.btn-challenge)');
+      routineButtons.forEach(btn => {
+        btn.classList.remove('done');
+        btn.innerText = "¿Hecho?";
+      });
+
+      const rewardBoxes = document.querySelectorAll('.immediate-reward-box');
+      rewardBoxes.forEach(box => {
+        box.classList.remove('unlocked');
+        box.querySelector('.reward-status').innerText = "Bloque Incompleto";
+      });
+
+      // Reset active challenge button for a new day
+      const challengeBtn = document.querySelector('.btn-challenge');
+      if (challengeBtn) {
+        challengeBtn.classList.remove('done');
+        challengeBtn.innerText = "¿Hecho?";
+      }
+      document.getElementById('challenge-input').value = "";
+    }
+  }
+</script>
 
 </body>
 </html>
