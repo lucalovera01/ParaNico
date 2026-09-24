@@ -432,27 +432,25 @@
   <!-- PAGINA 1: MENU PRINCIPAL -->
   <div id="menu-page" class="page active">
     <div class="menu-header">
-      <h1>📅 Tablero de Rutina y Retos</h1>
-      <p>Selecciona una sección para comenzar</p>
+      <h1>Menú Principal</h1>
     </div>
 
     <div class="menu-grid">
       <div class="menu-card c-rutinas" onclick="showPage('rutinas-page')">
         <div class="menu-icon">🌅</div>
         <h2 style="color: var(--primary);">Rutinas</h2>
-        <p>Completa los pasos en orden para ganar tu Tiempo Libre inmediato.</p>
       </div>
 
       <div class="menu-card c-retos" onclick="showPage('retos-page')">
         <div class="menu-icon">⭐</div>
-        <h2 style="color: #D35400;">Retos del Día</h2>
-        <p>Práctica nuevas habilidades de autonomía y suma Caritas.</p>
+        <h2 style="color: #D35400;">Desafíos</h2>
+        <p>Nuevas habilidades de autonomía</p>
       </div>
 
       <div class="menu-card c-recompensas" onclick="showPage('recompensas-page')">
         <div class="menu-icon">🎁</div>
         <h2 style="color: #B7950B;">Recompensas</h2>
-        <p>Mira los Premios Mayores que puedes desbloquear con tus Caritas.</p>
+        <p>Cumpliendo desafios puede desbloquear recompensas</p>
       </div>
     </div>
   </div>
@@ -460,27 +458,27 @@
   <!-- PAGINA 2: RUTINA SECUENCIAL E INMEDIATA -->
   <div id="rutinas-page" class="page">
     <section>
-      <h2>1. Rutinas Diarias con Premio Inmediato</h2>
+      <h2>1. Rutina. Tareas Diarias con Premio Inmediato</h2>
 
       <!-- BLOQUE 1: MAÑANA TEMPRANO -->
-      <h3>🌅 Bloque 1: Al Despertar</h3>
+      <h3>🌅 Al Despertar</h3>
       <table class="routine-table">
         <thead>
           <tr>
             <th class="icon-col">Icono</th>
-            <th>Acción / Paso</th>
+            <th>Debo...</th>
             <th class="action-col">Estado</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="icon-col">⏰</td>
-            <td>Despertarme y levantarme de la cama</td>
+            <td>Levantarme de la cama</td>
             <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
           </tr>
           <tr>
             <td class="icon-col">👕</td>
-            <td>Cambiarme de ropa (poner ropa de casa)</td>
+            <td>Ponerme la ropa</td>
             <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
           </tr>
           <tr>
@@ -498,25 +496,25 @@
 
       <div class="immediate-reward-box" id="reward-b1">
         <div>
-          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🎮 Tiempo libre de TV o Play / Juego preferido
+          <strong>🎁 MUY BIEN</strong> 🎮 Podes jugar a la Play, o ver la Tele.
         </div>
-        <span class="reward-status">Bloque Incompleto</span>
+        <span class="reward-status">Incompleto</span>
       </div>
 
       <!-- BLOQUE 2: SALIDA A LA ESCUELA -->
-      <h3>🏫 Bloque 2: Preparación para la Escuela</h3>
+      <h3>🏫 Para ir a la Escuela</h3>
       <table class="routine-table">
         <thead>
           <tr>
             <th class="icon-col">Icono</th>
-            <th>Acción / Paso</th>
+            <th>Tengo que...</th>
             <th class="action-col">Estado</th>
           </tr>
         </thead>
         <tbody>
           <tr style="background-color: #FFF3CD;">
             <td class="icon-col">🔔</td>
-            <td><strong>SUENA LA ALARMA</strong> (Transición: apagar tele/juego)</td>
+            <td><strong>SUENA LA ALARMA</strong> Apagar la pantalla</td>
             <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
           </tr>
           <tr>
@@ -526,17 +524,17 @@
           </tr>
           <tr>
             <td class="icon-col">🎒</td>
-            <td>Vestirse con la ropa del colegio y mochila lista</td>
+            <td>Ponerme la ropa del colegio</td>
             <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
           </tr>
           <tr>
             <td class="icon-col">🍲</td>
-            <td>Comer el almuerzo</td>
+            <td>Almorzar</td>
             <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
           </tr>
           <tr>
             <td class="icon-col">🧸</td>
-            <td>Guardar los juguetes utilizados</td>
+            <td>Guardar los juguetes</td>
             <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
           </tr>
         </tbody>
@@ -544,35 +542,35 @@
 
       <div class="immediate-reward-box" id="reward-b2">
         <div>
-          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 🚪 ¡Listo para salir feliz con mamá! / Canción favorita en el camino
+          <strong>🎁 MUY BIEN:</strong> 🚪 ¡Ya podes ir a la escuela!
         </div>
-        <span class="reward-status">Bloque Incompleto</span>
+        <span class="reward-status">Incompleto</span>
       </div>
 
       <!-- BLOQUE 3: TARDE Y NOCHE -->
-      <h3>🌙 Bloque 3: Tarde y Noche</h3>
+      <h3>🌙 A la Tarde y Noche</h3>
       <table class="routine-table">
         <thead>
           <tr>
             <th class="icon-col">Icono</th>
-            <th>Acción / Paso</th>
+            <th>Tengo que...</th>
             <th class="action-col">Estado</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="icon-col">🧼</td>
-            <td>Llegar, quitarse el calzado y lavarse las manos</td>
+            <td>Ponerme la ropa de casa</td>
             <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
           </tr>
           <tr>
             <td class="icon-col">✏️</td>
-            <td>Merendar y hacer la tarea del colegio</td>
+            <td>Merendar</td>
             <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
           </tr>
           <tr>
             <td class="icon-col">🛁</td>
-            <td>Bañarse o ducharse</td>
+            <td>Bañarme</td>
             <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
           </tr>
           <tr>
@@ -585,9 +583,9 @@
 
       <div class="immediate-reward-box" id="reward-b3">
         <div>
-          <strong>🎁 RECOMPENSA INMEDIATA:</strong> 📖 Cuento a elección / Tiempo de juego tranquilo antes de dormir
+          <strong>🎁 MUY BIEN:</strong> 📖 Contamos un cuento y nos dormimos
         </div>
-        <span class="reward-status">Bloque Incompleto</span>
+        <span class="reward-status">Incompleto</span>
       </div>
     </section>
   </div>
