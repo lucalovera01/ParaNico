@@ -3,24 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tablero Interactivo de Rutina y Recompensas - Modo Oscuro</title>
+  <title>Tablero Interactivo de Rutina y Recompensas</title>
   <style>
-    /* Dark Theme Design Tokens */
     :root {
-      --primary: #38BDF8;      /* Soft Sky Blue */
-      --secondary: #2DD4BF;    /* Teal Accent */
-      --accent: #F59E0B;       /* Amber Accent */
-      --success: #10B981;      /* Vibrant Emerald Green */
-      --bg: #0F172A;           /* Deep Slate Background */
-      --text: #F8FAFC;         /* High-Contrast Light Text */
-      --text-muted: #94A3B8;   /* Muted Slate Text */
-      --card-bg: #1E293B;      /* Dark Slate Card Background */
-      --card-border: #334155;  /* Slate Border Accent */
-      --btn-idle: #475569;      /* Dark Button Background */
-      --btn-idle-hover: #64748B;/* Slightly Lighter Hover */
-      --gold: #FACC15;         /* Gold Accent for Stars */
-      --gold-bg: #422006;      /* Dark Amber Background for Rewards */
-      --purple: #A855F7;      /* Vivid Purple Accent */
+      --primary: #38BDF8;
+      --secondary: #34D399;
+      --accent: #F59E0B;
+      --success: #10B981;
+      --bg: #0F172A;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --card-bg: #1E293B;
+      --card-border: #334155;
+      --btn-idle: #475569;
+      --gold: #FACC15;
+      --purple: #A855F7;
     }
 
     * {
@@ -43,20 +40,21 @@
       padding-bottom: 40px;
     }
 
+    /* Fixed Top Counter & Navigation Bar */
     .top-bar {
       position: sticky;
       top: 10px;
       z-index: 100;
       background: linear-gradient(135deg, #1E293B, #0F172A);
+      border: 1px solid var(--card-border);
       color: white;
-      padding: 12px 22px;
+      padding: 10px 20px;
       border-radius: 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--card-border);
-      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
     }
 
     .nav-left {
@@ -66,10 +64,10 @@
     }
 
     .btn-home {
-      background: #334155;
-      color: #F8FAFC;
-      border: 1px solid #475569;
-      padding: 8px 16px;
+      background: var(--primary);
+      color: #0F172A;
+      border: none;
+      padding: 6px 14px;
       border-radius: 20px;
       cursor: pointer;
       font-weight: bold;
@@ -78,12 +76,12 @@
     }
 
     .btn-home:hover {
-      background: var(--primary);
-      color: #0F172A;
+      background: #7DD3FC;
+      transform: scale(1.05);
     }
 
     .score-title {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -92,10 +90,10 @@
 
     .score-badge {
       background: var(--gold);
-      color: #000000;
-      font-size: 1.25rem;
+      color: #000;
+      font-size: 1.2rem;
       font-weight: bold;
-      padding: 2px 14px;
+      padding: 2px 12px;
       border-radius: 30px;
       box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
     }
@@ -104,7 +102,7 @@
       background: #EF4444;
       color: white;
       border: none;
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 20px;
       cursor: pointer;
       font-weight: bold;
@@ -116,7 +114,7 @@
       background: #DC2626;
     }
 
-    /* Pages Container & Transitions */
+    /* Pages Container */
     .page {
       display: none;
       animation: fadeIn 0.3s ease-in-out;
@@ -127,25 +125,24 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* MENU PAGE STYLING */
     .menu-header {
       text-align: center;
-      background: linear-gradient(135deg, #1E3A8A, #1E293B);
+      background: linear-gradient(135deg, #1E3A8A, #0284C7);
       color: white;
       padding: 30px 20px;
       border-radius: 16px;
       margin-bottom: 30px;
-      border: 1px solid #3B82F6;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .menu-header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 6px;
-      color: #F8FAFC;
+      font-size: 2rem;
+      margin-bottom: 10px;
     }
 
     .menu-grid {
@@ -160,7 +157,7 @@
       padding: 30px 20px;
       text-align: center;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       border: 2px solid var(--card-border);
       display: flex;
@@ -171,12 +168,12 @@
 
     .menu-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
 
-    .menu-card.c-rutinas { border-color: var(--primary); }
-    .menu-card.c-retos { border-color: var(--accent); }
-    .menu-card.c-recompensas { border-color: var(--gold); }
+    .menu-card.c-rutinas:hover { border-color: var(--primary); }
+    .menu-card.c-retos:hover { border-color: var(--accent); }
+    .menu-card.c-recompensas:hover { border-color: var(--gold); }
 
     .menu-icon {
       font-size: 3.5rem;
@@ -194,41 +191,43 @@
       color: var(--text-muted);
     }
 
+    /* GENERAL PAGE ELEMENTS */
     section {
       background: var(--card-bg);
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 25px;
       border: 1px solid var(--card-border);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     h2 {
       color: var(--primary);
-      border-bottom: 2px solid var(--primary);
+      border-bottom: 2px solid var(--card-border);
       padding-bottom: 8px;
-      margin-bottom: 20px;
-      font-size: 1.45rem;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
     }
 
     h3 {
-      color: #38BDF8;
-      margin: 20px 0 12px 0;
-      font-size: 1.15rem;
+      color: #E2E8F0;
+      margin: 15px 0 10px 0;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
+    /* Routine Table Styling */
     .routine-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .routine-table th, .routine-table td {
       border: 1px solid var(--card-border);
-      padding: 12px;
+      padding: 10px 12px;
       text-align: left;
     }
 
@@ -237,23 +236,10 @@
       color: var(--primary);
     }
 
-    .routine-table tr {
-      background-color: #1E293B;
-    }
-
-    .routine-table tr:nth-child(even) {
-      background-color: #1A2436;
-    }
-
-    .alarm-row {
-      background-color: #451A03 !important;
-      border-left: 4px solid var(--accent);
-    }
-
     .icon-col {
       width: 50px;
       text-align: center;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .action-col {
@@ -261,46 +247,49 @@
       text-align: center;
     }
 
+    /* Immediate Reward Block Card */
     .immediate-reward-box {
       background: #064E3B;
-      border: 2px solid var(--secondary);
-      border-radius: 10px;
-      padding: 14px 18px;
+      border: 2px solid #059669;
+      color: #A7F3D0;
+      border-radius: 8px;
+      padding: 12px 15px;
       margin-bottom: 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: all 0.3s;
-      color: #A7F3D0;
+      opacity: 0.7;
     }
 
     .immediate-reward-box.unlocked {
-      background: #065F46;
+      background: #022C22;
       border-color: var(--success);
+      color: #ECFDF5;
+      opacity: 1;
       box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-      color: #FFFFFF;
     }
 
     .reward-status {
       font-weight: bold;
-      padding: 6px 14px;
+      padding: 4px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
-      background: #475569;
-      color: #F8FAFC;
+      background: var(--btn-idle);
+      color: white;
     }
 
     .immediate-reward-box.unlocked .reward-status {
       background: var(--success);
-      color: #FFFFFF;
+      color: white;
     }
 
-    /* Action Buttons (Gray idle -> High contrast green done) */
+    /* Action Buttons */
     .btn-complete {
       background-color: var(--btn-idle);
-      color: #F8FAFC;
-      border: 1px solid #64748B;
-      padding: 8px 16px;
+      color: var(--text);
+      border: none;
+      padding: 8px 14px;
       border-radius: 20px;
       cursor: pointer;
       font-weight: bold;
@@ -314,28 +303,24 @@
     }
 
     .btn-complete:hover {
-      background-color: var(--btn-idle-hover);
+      background-color: #64748B;
       transform: scale(1.05);
     }
 
     .btn-complete.done {
       background-color: var(--success);
       color: white;
-      border-color: #059669;
       cursor: default;
       animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
     }
 
     .btn-challenge {
       background-color: var(--accent);
-      color: #000000;
-      border: none;
+      color: #0F172A;
     }
 
     .btn-challenge:hover {
       background-color: #D97706;
-      color: white;
     }
 
     @keyframes popIn {
@@ -344,14 +329,16 @@
       100% { transform: scale(1); }
     }
 
+    /* Active Challenge Card */
     .active-challenge-box {
-      background: #0F172A;
+      background: #1E1B4B;
       border: 2px dashed var(--accent);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 25px;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
     }
 
+    /* Challenge Bank Grid */
     .grid-challenges {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -361,59 +348,59 @@
     .challenge-card {
       border: 1px solid var(--card-border);
       border-left: 5px solid var(--accent);
-      border-radius: 10px;
-      padding: 14px;
+      border-radius: 8px;
+      padding: 12px;
       background: #0F172A;
     }
 
     .challenge-card h4 {
-      color: #FBBF24;
+      color: var(--accent);
       margin-bottom: 8px;
     }
 
     .challenge-card ul {
       list-style-type: disc;
       padding-left: 20px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
     }
 
     /* Major Rewards Section */
     .rewards-box {
-      background: var(--gold-bg);
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      padding: 18px;
+      background: #172554;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 15px;
     }
 
     .reward-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px;
-      border-bottom: 1px solid #78350F;
-      background: #1E293B;
-      margin-bottom: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      border-bottom: 1px solid #1E3A8A;
+      background: #0F172A;
+      margin-bottom: 8px;
+      border-radius: 8px;
       transition: all 0.3s;
     }
 
     .reward-item.locked {
       opacity: 0.5;
-      filter: grayscale(0.6);
+      filter: grayscale(0.5);
     }
 
     .reward-item.unlocked {
       border: 2px solid var(--gold);
-      box-shadow: 0 0 15px rgba(250, 204, 21, 0.35);
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
       opacity: 1;
       filter: none;
     }
 
     .badge {
-      background: #475569;
+      background: var(--btn-idle);
       color: white;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: bold;
@@ -436,26 +423,12 @@
 
     .note-box {
       background: #451A03;
-      border-left: 4px solid var(--gold);
-      padding: 14px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      margin-top: 20px;
+      border-left: 4px solid var(--accent);
       color: #FEF3C7;
-    }
-
-    /* Form Inputs for Dark Mode */
-    input[type="text"] {
-      background-color: #0F172A;
-      color: #F8FAFC;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      outline: none;
-    }
-
-    input[type="text"]:focus {
-      border-color: var(--primary);
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -479,26 +452,24 @@
   <div id="menu-page" class="page active">
     <div class="menu-header">
       <h1>Menú Principal</h1>
-      <p style="color: #93C5FD;">Selecciona una sección para navegar</p>
     </div>
 
     <div class="menu-grid">
       <div class="menu-card c-rutinas" onclick="showPage('rutinas-page')">
         <div class="menu-icon">🌅</div>
         <h2 style="color: var(--primary);">Rutinas</h2>
-        <p>Completa las tareas para ganar tu premio inmediato.</p>
       </div>
 
       <div class="menu-card c-retos" onclick="showPage('retos-page')">
         <div class="menu-icon">⭐</div>
         <h2 style="color: var(--accent);">Desafíos</h2>
-        <p>Aprende nuevas habilidades y suma Caritas.</p>
+        <p>Nuevas habilidades de autonomía</p>
       </div>
 
       <div class="menu-card c-recompensas" onclick="showPage('recompensas-page')">
         <div class="menu-icon">🎁</div>
         <h2 style="color: var(--gold);">Recompensas</h2>
-        <p>Cumpliendo desafíos puedes desbloquear grandes premios.</p>
+        <p>Cumpliendo desafíos puede desbloquear recompensas</p>
       </div>
     </div>
   </div>
@@ -508,8 +479,8 @@
     <section>
       <h2>1. Rutina. Tareas Diarias con Premio Inmediato</h2>
 
-      <!-- BLOQUE 1: MAÑANA TEMPRANO -->
-      <h3>🌅 Al Despertar</h3>
+      <!-- BLOQUE 1 UNIFICADO: A LA MAÑANA -->
+      <h3>🌅 A la Mañana</h3>
       <table class="routine-table">
         <thead>
           <tr>
@@ -539,63 +510,42 @@
             <td>Tomar el desayuno</td>
             <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
           </tr>
+          <tr style="background-color: #1E1B4B;">
+            <td class="icon-col">🔔</td>
+            <td><strong>SUENA LA ALARMA</strong> Apagar la pantalla</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🪥</td>
+            <td>Lavarse los dientes</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🎒</td>
+            <td>Ponerme la ropa del colegio</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🍲</td>
+            <td>Almorzar</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
+          <tr>
+            <td class="icon-col">🧸</td>
+            <td>Guardar los juguetes</td>
+            <td class="action-col"><button class="btn-complete b1" onclick="checkStep(this, 'b1', 'reward-b1')">¿Hecho?</button></td>
+          </tr>
         </tbody>
       </table>
 
       <div class="immediate-reward-box" id="reward-b1">
         <div>
-          <strong>🎁 MUY BIEN:</strong> 🎮 Puedes jugar a la Play o ver la Tele.
+          <strong>🎁 MUY BIEN:</strong> 🎮 ¡Elegir tiempo libre y salir a la escuela!
         </div>
         <span class="reward-status">Incompleto</span>
       </div>
 
-      <!-- BLOQUE 2: SALIDA A LA ESCUELA -->
-      <h3>🏫 Para ir a la Escuela</h3>
-      <table class="routine-table">
-        <thead>
-          <tr>
-            <th class="icon-col">Icono</th>
-            <th>Tengo que...</th>
-            <th class="action-col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="alarm-row">
-            <td class="icon-col">🔔</td>
-            <td><strong>SUENA LA ALARMA</strong> (Apagar la pantalla)</td>
-            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-          </tr>
-          <tr>
-            <td class="icon-col">🪥</td>
-            <td>Lavarse los dientes</td>
-            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-          </tr>
-          <tr>
-            <td class="icon-col">🎒</td>
-            <td>Ponerme la ropa del colegio</td>
-            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-          </tr>
-          <tr>
-            <td class="icon-col">🍲</td>
-            <td>Almorzar</td>
-            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-          </tr>
-          <tr>
-            <td class="icon-col">🧸</td>
-            <td>Guardar los juguetes</td>
-            <td class="action-col"><button class="btn-complete b2" onclick="checkStep(this, 'b2', 'reward-b2')">¿Hecho?</button></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="immediate-reward-box" id="reward-b2">
-        <div>
-          <strong>🎁 MUY BIEN:</strong> 🚪 ¡Ya puedes ir a la escuela feliz con mamá!
-        </div>
-        <span class="reward-status">Incompleto</span>
-      </div>
-
-      <!-- BLOQUE 3: TARDE Y NOCHE -->
+      <!-- BLOQUE 2: TARDE Y NOCHE -->
       <h3>🌙 A la Tarde y Noche</h3>
       <table class="routine-table">
         <thead>
@@ -613,7 +563,7 @@
           </tr>
           <tr>
             <td class="icon-col">✏️</td>
-            <td>Merendar y hacer la tarea</td>
+            <td>Merendar</td>
             <td class="action-col"><button class="btn-complete b3" onclick="checkStep(this, 'b3', 'reward-b3')">¿Hecho?</button></td>
           </tr>
           <tr>
@@ -631,7 +581,7 @@
 
       <div class="immediate-reward-box" id="reward-b3">
         <div>
-          <strong>🎁 MUY BIEN:</strong> 📖 Contamos un cuento y nos dormimos.
+          <strong>🎁 MUY BIEN:</strong> 📖 Contamos un cuento y nos dormimos
         </div>
         <span class="reward-status">Incompleto</span>
       </div>
@@ -642,13 +592,13 @@
   <div id="retos-page" class="page">
     <section>
       <h2>2. Reto del Día (Suma Caritas)</h2>
-      <p style="margin-bottom: 15px; color: var(--text-muted);">Realizar los retos permite juntar <strong style="color: var(--gold);">Caritas / Estrellas ⭐</strong> acumulables para desbloquear Recompensas Mayores.</p>
+      <p style="margin-bottom: 15px; color: var(--text-muted);">Realizar los retos permite juntar <strong>Caritas / Estrellas ⭐</strong> acumulables para desbloquear Recompensas Mayores.</p>
 
       <div class="active-challenge-box">
-        <h3 style="color: var(--gold); margin-top: 0;">⭐ Reto Especial de Hoy</h3>
-        <p style="margin-bottom: 12px; color: var(--text-muted);">Escriban el reto a trabajar hoy (ej: Servir jugo solo, peinarse solo):</p>
+        <h3>⭐ Reto Especial de Hoy</h3>
+        <p style="margin-bottom: 10px; color: var(--text-muted);">Escriban el reto a trabajar hoy (ej: Servir jugo solo, peinarse solo):</p>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <input type="text" id="challenge-input" placeholder="Escribe aquí el reto..." style="flex: 1; min-width: 200px;">
+          <input type="text" id="challenge-input" placeholder="Escribe aquí el reto..." style="flex: 1; padding: 10px; background: #0F172A; color: white; border: 1px solid var(--card-border); border-radius: 6px; min-width: 200px;">
           <button class="btn-complete btn-challenge" onclick="addChallengePoint(this)">¿Hecho?</button>
         </div>
       </div>
@@ -728,7 +678,7 @@
 
       <div class="note-box">
         <strong> Reglas clave del sistema:</strong>
-        <ul style="margin-top: 8px; padding-left: 20px;">
+        <ul style="padding-left: 20px; margin-top: 5px;">
           <li>Las tareas diarias otorgan su <strong>recompensa de bloque de forma inmediata</strong> al completarse todas.</li>
           <li>Los Retos otorgan <strong>Caritas acumulables</strong> que no se pierden al reiniciar el día.</li>
           <li><strong>NUNCA se quitan las caritas o recompensas ganadas.</strong></li>
